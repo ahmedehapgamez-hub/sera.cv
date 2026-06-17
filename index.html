@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sera CV</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght=300;400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="background-animation">
+        <div class="ambient-glow"></div>
+        <ul class="circles">
+            <li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+        </ul>
+    </div>
+
+    <header>
+        <div class="header-logo">
+            <i ></i>
+            <h1>Sera CV</h1>
+        </div>
+        <div class="country-selector">
+            <label><i class="fa-solid fa-earth-americas"></i> الدولة :</label>
+            <select id="countrySelect" onchange="updatePricing()">
+                <option value="EG" selected>🇪🇬 Egypt</option>
+                <option value="SA">🇸🇦 Saudi Arabia</option>
+            </select>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-badge"><i class="fa-solid fa-bolt"></i> نظام معتمد كلياً بنظام فرز الـ ATS</div>
+        <h1>انطلق خطوة بكل ثقة نحو<span> <br>وظيفتك القادمة</span></h1>
+        <p style="text-align: justify;">نحن لا نكتب نصوصاً فقط، بل نبني لك هوية مهنية متكاملة تبرز مهاراتك وخبراتك الفردية وتلفت انتباه كبرى جهات التوظيف الإقليمية والعالمية.</p>
+    </section>
+
+    <div class="features-bar">
+        <div class="feature-item">
+            <i class="fa-solid fa-robot"></i>
+            <div>
+                <h5>تطابق أنظمة الـ ATS</h5>
+                <p>صياغة ذكية لتخطي الفلاتر الإلكترونية.</p>
+            </div>
+        </div>
+        <div class="feature-item">
+            <i class="fa-solid fa-bolt"></i>
+            <div>
+                <h5>تسليم سريع مرن</h5>
+                <p>تجهيز كامل بحد اقصي خلال 48 ساعة.</p>
+            </div>
+        </div>
+        <div class="feature-item">
+            <i class="fa-solid fa-headset"></i>
+            <div>
+                <h5>دعم وتعديل مفتوح</h5>
+                <p>متابعة وتعديلات حتي 7 ايام.</p>
+            </div>
+        </div>
+    </div>
+
+    <section class="services-section-title">
+        <h2>اختر <span>باقتك المهنية</span></h2>
+    </section>
+
+    <section class="services">
+        <div class="card">
+            <div>
+                <div class="icon"><i class="fa-solid fa-file-invoice"></i></div>
+                <h3>سيرة ذاتية (CV)</h3>
+                <p>بناء ملف سيرة ذاتية شامل، مهيكل بالكلمات المفتاحية لوظيفتك المستهدفة لضمان الفرز المثالي.</p>
+                <ul class="card-spec-list">
+                    <li><i class="fa-solid fa-check"></i> متوافقة 100% مع الـ ATS</li>
+                    <li><i class="fa-solid fa-check"></i> تنسيق فاخر قابل للطباعة</li>
+                    <li><i class="fa-solid fa-check"></i> سيرة ذاتية انجليزي ats + سيرة ذاتية باللغة العربية</li>
+                </ul>
+            </div>
+            <div class="price-tag" id="cvPrice">299 بدل <del style="color: rgb(252, 0, 0);">499</del> <span>ج.م</span></div>
+            <button class="btn" onclick="openModal('سيرة ذاتية كاملة', 'cvPrice')">اطلب الخدمة الآن <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <div class="card featured">
+            <div>
+                <div class="icon"><i class="fa-solid fa-envelope-open-text"></i></div>
+                <h3>خطاب تغطية (Cover Letter)</h3>
+                <p>صياغة خطاب رسمي موجه لمسؤولي التوظيف، يوضح نقاط تميزك ولماذا أنت المرشح الأنسب للمنصب.</p>
+                <ul class="card-spec-list">
+                    <li><i class="fa-solid fa-check"></i> كتابة بأسلوب إقناعي تسويقي مرتفع</li>
+                    <li><i class="fa-solid fa-check"></i> مخصص ومصمم لقطاع تخصصك بدقة</li>
+                    <li><i class="fa-solid fa-check"></i> متاح باللغتين العربية أو الإنجليزية</li>
+                </ul>
+            </div>
+            <div class="price-tag" id="clPrice">200 بدل <del style="color: rgb(252, 0, 0);">399</del> <span>ج.م</span></div>
+            <button class="btn" onclick="openModal('خطاب تغطية (Cover Letter)', 'clPrice')">اطلب الخدمة الآن <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+
+        <div class="card">
+            <div>
+                <div class="icon"><i class="fa-solid fa-globe"></i></div>
+                <h3>موقع توظيف شخصي (Portfolio)</h3>
+                <p>موقع ويب تفاعلي حديث خاص بك، يضم أعمالك وخبراتك ويترك انطباعاً رقمياً مذهلاً ومحترفاً.</p>
+                <ul class="card-spec-list">
+                    <li><i class="fa-solid fa-check"></i> واجهة مستخدم سريعة وعصرية</li>
+                    <li><i class="fa-solid fa-check"></i> متوافق مع كافة الشاشات والموبايل</li>
+                    <li><i class="fa-solid fa-check"></i> كود نظيف يدعم إرفاق مشاريعك</li>
+                </ul>
+            </div>
+            <div class="price-tag" id="portPrice">600 بدل <del style="color: rgb(252, 0, 0);">899</del> <span>ج.م</span></div>
+            <button class="btn" onclick="openModal('موقع توظيف شخصي', 'portPrice')">اطلب الخدمة الآن <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+    </section>
+
+    <section class="contact-section">
+        <h2>قنوات <span>التواصل الرسمية</span></h2>
+        <p class="section-desc">فريقنا متاح للرد على أي استفسارات وتنسيق الطلبات الخاصة والمباشرة على مدار الساعة</p>
+        
+        <div class="social-grid">
+            <a href="https://wa.me/966579801275" target="_blank" class="social-card whatsapp">
+                <i class="fa-brands fa-whatsapp"></i>
+                <span>المحادثة الفورية عبر واتساب</span>
+                <span class="username">رد تلقائي ومباشر</span>
+            </a>
+            <a href="https://www.facebook.com/share/1PJWz46fZy/" target="_blank" class="social-card facebook">
+                <i class="fa-brands fa-facebook-f"></i>
+                <span>موقعنا علي فيسبوك </span>
+                <span class="username">sera.cv</span>
+            </a>
+            <a href="https://www.instagram.com/sera_cv/" target="_blank" class="social-card instagram">
+                <i class="fa-brands fa-instagram"></i>
+                <span>حسابنا علي إنستجرام</span>
+                <span class="username">sera_cv</span>
+            </a>
+            <a href="https://www.tiktok.com/@sera.cv?_r=1&_t=ZS-97HYPpsDvol" target="_blank" class="social-card tiktok">
+                <i class="fa-brands fa-tiktok"></i>
+                <span>حسابنا علي تيك توك</span>
+                <span class="username">@sera.cv</span>
+            </a>
+        </div>
+    </section>
+
+    <div class="modal" id="orderModal">
+        <div class="modal-content">
+            <i class="fa-solid fa-xmark close-btn" onclick="closeModal()"></i>
+            
+            <div class="modal-header">
+                <h2 id="modalTitle">تجهيز طلب الخدمة</h2>
+                <p style="color: var(--text-muted); font-size: 13px; margin-top: 5px;">أكمل الخطوات التالية لإنشاء ملف بياناتك المنظم لإرساله بالأسعار المحددة.</p>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-line" id="progressLine"></div>
+                <div class="step-indicator active" id="ind-0">1</div>
+                <div class="step-indicator" id="ind-1">2</div>
+                <div class="step-indicator" id="ind-2">3</div>
+                <div class="step-indicator" id="ind-3">4</div>
+            </div>
+
+            <form id="cvForm" onsubmit="sendToWhatsApp(event)">
+                <input type="hidden" id="selectedService">
+                <input type="hidden" id="orderPrice">
+                <input type="hidden" id="orderCountry">
+
+                <div class="form-step active">
+                    <div class="form-section">
+                        <h4><i class="fa-solid fa-user"></i> الخطوة 1: البيانات الشخصية والاتصال</h4>
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label class="required">الاسم الكامل</label>
+                                <input type="text" id="fullName" required placeholder="مثال: أحمد إيهاب...">
+                            </div>
+                            <div class="form-group">
+                                <label class="required">رقم الهاتف النشط</label>
+                                <input type="tel" id="phone" required placeholder="01xxxxxxxxx">
+                            </div>
+                        </div>
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label class="required">البريد الإلكتروني</label>
+                                <input type="email" id="email" required placeholder="name@example.com">
+                            </div>
+                            <div class="form-group">
+                                <label class="required">العنوان والمدينة</label>
+                                <input type="text" id="address" required placeholder="المدينة، المحافظة">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>رابط حساب LinkedIn المهني (إن وجد)</label>
+                            <input type="url" id="linkedin" placeholder="https://linkedin.com/in/username">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-step">
+                    <div class="form-section">
+                        <h4><i class="fa-solid fa-briefcase"></i> الخطوة 2: المستهدف المهني والخبرات</h4>
+                        <div class="form-group">
+                            <label class="required">المسمى الوظيفي والهدف المهني المستهدف</label>
+                            <textarea id="objective" rows="2" placeholder="المسمى الحالي أو الوظيفة التي تبحث عنها برغبة..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>الخبرات العملية السابقة (الشركات، الفترات، المسمى والمسؤوليات)</label>
+                            <textarea id="experience" rows="3" placeholder="مثال: شركة (X) - مهندس تطوير - من 2024 إلى 2026: بناء الواجهات..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-step">
+                    <div class="form-section">
+                        <h4><i class="fa-solid fa-graduation-cap"></i> الخطوة 3: الخلفية التعليمية والقدرات</h4>
+                        <div class="form-group">
+                            <label class="required">المؤهل الدراسي والجامعة وسنة التخرج</label>
+                            <textarea id="education" rows="2" placeholder="الشهادة، التخصص، الكلية، اسم الجامعة، تاريخ التخرج..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="required">المهارات والقدرات والبرامج التي تتقنها</label>
+                            <textarea id="skills" rows="2" placeholder="مهارات تقنية، برمجية، إدارية، مهارات مرنة وشخصية..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="required">اللغات المكتسبة ومستويات التحدث</label>
+                            <input type="text" id="languages" placeholder="مثال: العربية (الأم) - الإنجليزية (تحدث وكتابة بطلاقة)">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-step">
+                    <div class="form-section">
+                        <h4><i class="fa-solid fa-circle-plus"></i> الخطوة 4: الإضافات الفنية والمشاريع</h4>
+                        <div class="form-group">
+                            <label>الدورات التدريبية الشهادات المهنية (الكورسات)</label>
+                            <textarea id="courses" rows="2" placeholder="أي كورسات، ورش عمل، أو شهادات فنية حصلت عليها..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>المشاريع السابقة ونماذج الأعمال الفردية</label>
+                            <textarea id="projects" rows="2" placeholder="أعمال مميزة نفذتها، روابط أعمال، إلخ..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>الهوايات والاهتمامات الشخصية</label>
+                            <input type="text" id="hobbies" placeholder="مثل القراءة، البحث التقني، الرياضة...">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-navigation">
+                    <button type="button" class="btn-secondary" id="prevBtn" onclick="changeStep(-1)" style="display:none;">السابق</button>
+                    <button type="button" class="btn" id="nextBtn" onclick="changeStep(1)">التالي</button>
+                    <button type="submit" class="btn" id="submitBtn" style="display:none;"><i class="fa-brands fa-whatsapp"></i> تأكيد وإرسال الطلب</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <footer style="text-align: center; font-family: 'Courier New', Courier, monospace; border-style: double; padding: 4px; border-radius: 20px; width: 100px; margin:auto;">sera cv </footer>
+    <br>
+    <br>
+    <script src="script.js"></script>
+
+</body>
+</html>
