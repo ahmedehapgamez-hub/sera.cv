@@ -3,257 +3,766 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sera CV</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght=300;400;600;700;900&display=swap" rel="stylesheet">
+    <title>Sera CV | المتجر الرسمي</title>
+    <!-- FontAwesome للأيقونات -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts - الخطوط العربية الرسمية -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-dark: #0a1128;
+            --bg-card: #101f42;
+            --primary: #0077ff;
+            --accent: #00d2ff;
+            --text-white: #ffffff;
+            --text-muted: #8fa0dd;
+            --border-color: rgba(0, 210, 255, 0.15);
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-white);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* الهيدر / شريط التنقل */
+        header {
+            background: rgba(10, 17, 40, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            background: linear-gradient(135deg, var(--text-white) 30%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .country-selector {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-white);
+            padding: 8px 12px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            outline: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        /* واجهة الترحيب */
+        .hero {
+            text-align: center;
+            padding: 40px 20px 20px;
+            background: radial-gradient(circle at top, rgba(0, 119, 255, 0.15) 0%, transparent 60%);
+        }
+
+        .hero h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* شبكة المنتجات */
+        .products-container {
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 25px;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .product-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 210, 255, 0.1);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+
+        .product-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .product-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+
+        .price-tag {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--text-white);
+        }
+
+        .price-tag span {
+            font-size: 0.85rem;
+            color: var(--accent);
+            margin-right: 5px;
+        }
+
+        .order-btn {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: var(--text-white);
+            border: none;
+            padding: 10px 22px;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(0, 119, 255, 0.3);
+        }
+
+        /* نافذة النموذج المنبثقة */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(5, 9, 22, 0.85);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--transition);
+            padding: 15px;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            width: 100%;
+            max-width: 550px;
+            border-radius: 28px;
+            padding: 25px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            transform: translateY(30px);
+            transition: var(--transition);
+        }
+
+        .modal-overlay.active .modal-box {
+            transform: translateY(0);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: none;
+            color: var(--text-white);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        /* شريط تقدم الخطوات */
+        .steps-progress {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0 30px;
+            position: relative;
+        }
+
+        .steps-progress::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 0; width: 100%; height: 2px;
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+
+        .progress-line {
+            position: absolute;
+            top: 50%; right: 0; width: 0%; height: 2px;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+            transform: translateY(-50%);
+            z-index: 1;
+            transition: var(--transition);
+        }
+
+        .step-indicator {
+            width: 32px;
+            height: 32px;
+            background: var(--bg-dark);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 700;
+            position: relative;
+            z-index: 2;
+            transition: var(--transition);
+            color: var(--text-muted);
+        }
+
+        .step-indicator.active {
+            border-color: var(--accent);
+            background: var(--primary);
+            color: var(--text-white);
+        }
+
+        .step-indicator.completed {
+            border-color: var(--accent);
+            background: var(--accent);
+            color: var(--bg-dark);
+        }
+
+        /* النماذج والخطوات */
+        .form-step {
+            display: none;
+        }
+
+        .form-step.active {
+            display: block;
+        }
+
+        .step-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text-white);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .step-title i {
+            color: var(--accent);
+        }
+
+        .input-group {
+            margin-bottom: 18px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-muted);
+        }
+
+        .input-group label span.required {
+            color: #ff4d4d;
+            margin-right: 4px;
+        }
+
+        .input-group input, .input-group textarea {
+            width: 100%;
+            background: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px;
+            color: var(--text-white);
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        .form-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            border: none;
+            transition: var(--transition);
+        }
+
+        .nav-btn.prev {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-white);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-btn.next {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: var(--text-white);
+        }
+
+        .nav-btn.submit {
+            background: #25d366;
+            color: white;
+        }
+
+        /* الفوتر ومواقع التواصل */
+        footer {
+            padding: 40px 20px;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            margin-top: 50px;
+            background: #060b1a;
+        }
+
+        .social-headline {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text-white);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .social-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-white);
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+
+        .footer-credits {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+    </style>
 </head>
 <body>
 
-    <div class="background-animation">
-        <div class="ambient-glow"></div>
-        <ul class="circles">
-            <li></li><li></li><li></li><li></li><li></li><li></li><li></li>
-        </ul>
-    </div>
-
+    <!-- الهيدر -->
     <header>
-        <div class="header-logo">
-            <i ></i>
-            <h1>Sera CV</h1>
-        </div>
-        <div class="country-selector">
-            <label><i class="fa-solid fa-earth-americas"></i> الدولة :</label>
-            <select id="countrySelect" onchange="updatePricing()">
-                <option value="EG" selected>🇪🇬 Egypt</option>
-                <option value="SA">🇸🇦 Saudi Arabia</option>
-            </select>
-        </div>
+        <div class="logo">SERA CV</div>
+        <select class="country-selector" id="countrySelect">
+            <option value="EG">🇪🇬 مصر (EGP)</option>
+            <option value="SA">🇸🇦 السعودية (SAR)</option>
+        </select>
     </header>
 
+    <!-- الواجهة الترحيبية -->
     <section class="hero">
-        <div class="hero-badge"><i class="fa-solid fa-bolt"></i> نظام معتمد كلياً بنظام فرز الـ ATS</div>
-        <h1>انطلق خطوة بكل ثقة نحو<span> <br>وظيفتك القادمة</span></h1>
-        <p style="text-align: justify;">نحن لا نكتب نصوصاً فقط، بل نبني لك هوية مهنية متكاملة تبرز مهاراتك وخبراتك الفردية وتلفت انتباه كبرى جهات التوظيف الإقليمية والعالمية.</p>
+        <h1>صمم <span>مستقبلك المهني</span> باحترافية</h1>
+        <p>اطلب الآن السيرة الذاتية، خطاب التغطية، أو موقعك الشخصي بأعلى المعايير العالمية الرسمية.</p>
     </section>
 
-    <div class="features-bar">
-        <div class="feature-item">
-            <i class="fa-solid fa-robot"></i>
-            <div>
-                <h5>تطابق أنظمة الـ ATS</h5>
-                <p>صياغة ذكية لتخطي الفلاتر الإلكترونية.</p>
+    <!-- المنتجات -->
+    <main class="products-container">
+        <!-- المنتج الأول -->
+        <div class="product-card">
+            <div class="product-icon"><i class="fa-regular fa-file-lines"></i></div>
+            <div class="product-title">سيرة ذاتية احترافية</div>
+            <div class="product-desc">سيرة ذاتية متوافقة مع أنظمة الفرز الإلكتروني ATS + سيرة ذتية باللغة العربية  .</div>
+            <div class="product-footer">
+                <div class="price-tag" id="price-cv">300 <span>جنيه</span></div>
+                <button class="order-btn" data-product="سيرة ذاتية احترافية">اطلب الآن</button>
             </div>
         </div>
-        <div class="feature-item">
-            <i class="fa-solid fa-bolt"></i>
-            <div>
-                <h5>تسليم سريع مرن</h5>
-                <p>تجهيز كامل بحد اقصي خلال 48 ساعة.</p>
+
+        <!-- المنتج الثاني -->
+        <div class="product-card">
+            <div class="product-icon"><i class="fa-solid fa-envelope-open-text"></i></div>
+            <div class="product-title">خطاب تغطية (Cover Letter)</div>
+            <div class="product-desc">خطاب تعريفي مصاغ بأسلوب تسويقي رسمي ومخصص للوظيفة المستهدفة لإبراز نقاط قوتك.</div>
+            <div class="product-footer">
+                <div class="price-tag" id="price-cl">140 <span>جنيه</span></div>
+                <button class="order-btn" data-product="خطاب تغطية (Cover Letter)">اطلب الآن</button>
             </div>
         </div>
-        <div class="feature-item">
-            <i class="fa-solid fa-headset"></i>
-            <div>
-                <h5>دعم وتعديل مفتوح</h5>
-                <p>متابعة وتعديلات حتي 7 ايام.</p>
+
+        <!-- المنتج الثالث -->
+        <div class="product-card">
+            <div class="product-icon"><i class="fa-solid fa-laptop-code"></i></div>
+            <div class="product-title">موقع شخصي (برتوفليو)</div>
+            <div class="product-desc">موقع إلكتروني متكامل يعرض خبراتك، أعمالك، ومهاراتك  + السيرة الذاتية والكفر لتر      .</div>
+            <div class="product-footer">
+                <div class="price-tag" id="price-portfolio">580<span>جنيه</span></div>
+                <button class="order-btn" data-product="موقع شخصي (برتوفليو)">اطلب الآن</button>
             </div>
         </div>
-    </div>
+    </main>
 
-    <section class="services-section-title">
-        <h2>اختر <span>باقتك المهنية</span></h2>
-    </section>
-
-    <section class="services">
-        <div class="card">
-            <div>
-                <div class="icon"><i class="fa-solid fa-file-invoice"></i></div>
-                <h3>سيرة ذاتية (CV)</h3>
-                <p>بناء ملف سيرة ذاتية شامل، مهيكل بالكلمات المفتاحية لوظيفتك المستهدفة لضمان الفرز المثالي.</p>
-                <ul class="card-spec-list">
-                    <li><i class="fa-solid fa-check"></i> متوافقة 100% مع الـ ATS</li>
-                    <li><i class="fa-solid fa-check"></i> تنسيق فاخر قابل للطباعة</li>
-                    <li><i class="fa-solid fa-check"></i> سيرة ذاتية انجليزي ats + سيرة ذاتية باللغة العربية</li>
-                </ul>
-            </div>
-            <div class="price-tag" id="cvPrice">299 بدل <del style="color: rgb(252, 0, 0);">499</del> <span>ج.م</span></div>
-            <button class="btn" onclick="openModal('سيرة ذاتية كاملة', 'cvPrice')">اطلب الخدمة الآن <i class="fa-solid fa-arrow-left"></i></button>
-        </div>
-
-        <div class="card featured">
-            <div>
-                <div class="icon"><i class="fa-solid fa-envelope-open-text"></i></div>
-                <h3>خطاب تغطية (Cover Letter)</h3>
-                <p>صياغة خطاب رسمي موجه لمسؤولي التوظيف، يوضح نقاط تميزك ولماذا أنت المرشح الأنسب للمنصب.</p>
-                <ul class="card-spec-list">
-                    <li><i class="fa-solid fa-check"></i> كتابة بأسلوب إقناعي تسويقي مرتفع</li>
-                    <li><i class="fa-solid fa-check"></i> مخصص ومصمم لقطاع تخصصك بدقة</li>
-                    <li><i class="fa-solid fa-check"></i> متاح باللغتين العربية أو الإنجليزية</li>
-                </ul>
-            </div>
-            <div class="price-tag" id="clPrice">200 بدل <del style="color: rgb(252, 0, 0);">399</del> <span>ج.م</span></div>
-            <button class="btn" onclick="openModal('خطاب تغطية (Cover Letter)', 'clPrice')">اطلب الخدمة الآن <i class="fa-solid fa-arrow-left"></i></button>
-        </div>
-
-        <div class="card">
-            <div>
-                <div class="icon"><i class="fa-solid fa-globe"></i></div>
-                <h3>موقع توظيف شخصي (Portfolio)</h3>
-                <p>موقع ويب تفاعلي حديث خاص بك، يضم أعمالك وخبراتك ويترك انطباعاً رقمياً مذهلاً ومحترفاً.</p>
-                <ul class="card-spec-list">
-                    <li><i class="fa-solid fa-check"></i> واجهة مستخدم سريعة وعصرية</li>
-                    <li><i class="fa-solid fa-check"></i> متوافق مع كافة الشاشات والموبايل</li>
-                    <li><i class="fa-solid fa-check"></i> كود نظيف يدعم إرفاق مشاريعك</li>
-                </ul>
-            </div>
-            <div class="price-tag" id="portPrice">600 بدل <del style="color: rgb(252, 0, 0);">899</del> <span>ج.م</span></div>
-            <button class="btn" onclick="openModal('موقع توظيف شخصي', 'portPrice')">اطلب الخدمة الآن <i class="fa-solid fa-arrow-left"></i></button>
-        </div>
-    </section>
-
-    <section class="contact-section">
-        <h2>قنوات <span>التواصل الرسمية</span></h2>
-        <p class="section-desc">فريقنا متاح للرد على أي استفسارات وتنسيق الطلبات الخاصة والمباشرة على مدار الساعة</p>
-        
-        <div class="social-grid">
-            <a href="https://wa.me/966579801275" target="_blank" class="social-card whatsapp">
-                <i class="fa-brands fa-whatsapp"></i>
-                <span>المحادثة الفورية عبر واتساب</span>
-                <span class="username">رد تلقائي ومباشر</span>
-            </a>
-            <a href="https://www.facebook.com/share/1PJWz46fZy/" target="_blank" class="social-card facebook">
-                <i class="fa-brands fa-facebook-f"></i>
-                <span>موقعنا علي فيسبوك </span>
-                <span class="username">sera.cv</span>
-            </a>
-            <a href="https://www.instagram.com/sera_cv/" target="_blank" class="social-card instagram">
-                <i class="fa-brands fa-instagram"></i>
-                <span>حسابنا علي إنستجرام</span>
-                <span class="username">sera_cv</span>
-            </a>
-            <a href="https://www.tiktok.com/@sera.cv?_r=1&_t=ZS-97HYPpsDvol" target="_blank" class="social-card tiktok">
-                <i class="fa-brands fa-tiktok"></i>
-                <span>حسابنا علي تيك توك</span>
-                <span class="username">@sera.cv</span>
-            </a>
-        </div>
-    </section>
-
-    <div class="modal" id="orderModal">
-        <div class="modal-content">
-            <i class="fa-solid fa-xmark close-btn" onclick="closeModal()"></i>
+    <!-- النموذج المنبثق متعدد الخطوات -->
+    <div class="modal-overlay" id="orderModal">
+        <div class="modal-box">
+            <button class="close-modal" id="closeModalBtn"><i class="fa-solid fa-xmark"></i></button>
             
-            <div class="modal-header">
-                <h2 id="modalTitle">تجهيز طلب الخدمة</h2>
-                <p style="color: var(--text-muted); font-size: 13px; margin-top: 5px;">أكمل الخطوات التالية لإنشاء ملف بياناتك المنظم لإرساله بالأسعار المحددة.</p>
-            </div>
-
-            <div class="progress-container">
+            <h2 id="modalProductTitle" style="font-size: 1.3rem; font-weight:800; text-align: center;">تقديم طلب</h2>
+            
+            <!-- مؤشر تقدم الخطوات -->
+            <div class="steps-progress">
                 <div class="progress-line" id="progressLine"></div>
-                <div class="step-indicator active" id="ind-0">1</div>
-                <div class="step-indicator" id="ind-1">2</div>
-                <div class="step-indicator" id="ind-2">3</div>
-                <div class="step-indicator" id="ind-3">4</div>
+                <div class="step-indicator active">1</div>
+                <div class="step-indicator">2</div>
+                <div class="step-indicator">3</div>
+                <div class="step-indicator">4</div>
             </div>
 
-            <form id="cvForm" onsubmit="sendToWhatsApp(event)">
-                <input type="hidden" id="selectedService">
-                <input type="hidden" id="orderPrice">
-                <input type="hidden" id="orderCountry">
+            <form id="checkoutForm" onsubmit="event.preventDefault();">
+                <input type="hidden" id="selectedItemName">
 
+                <!-- الخطوة 1: البيانات الشخصية -->
                 <div class="form-step active">
-                    <div class="form-section">
-                        <h4><i class="fa-solid fa-user"></i> الخطوة 1: البيانات الشخصية والاتصال</h4>
-                        <div class="grid-2">
-                            <div class="form-group">
-                                <label class="required">الاسم الكامل</label>
-                                <input type="text" id="fullName" required placeholder="مثال: أحمد إيهاب...">
-                            </div>
-                            <div class="form-group">
-                                <label class="required">رقم الهاتف النشط</label>
-                                <input type="tel" id="phone" required placeholder="01xxxxxxxxx">
-                            </div>
-                        </div>
-                        <div class="grid-2">
-                            <div class="form-group">
-                                <label class="required">البريد الإلكتروني</label>
-                                <input type="email" id="email" required placeholder="name@example.com">
-                            </div>
-                            <div class="form-group">
-                                <label class="required">العنوان والمدينة</label>
-                                <input type="text" id="address" required placeholder="المدينة، المحافظة">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>رابط حساب LinkedIn المهني (إن وجد)</label>
-                            <input type="url" id="linkedin" placeholder="https://linkedin.com/in/username">
-                        </div>
+                    <div class="step-title"><i class="fa-solid fa-user"></i> البيانات الشخصية</div>
+                    <div class="input-group">
+                        <label>الاسم الكامل <span class="required">*</span></label>
+                        <input type="text" id="clientName" placeholder="الاسم الثنائي أو الثلاثي">
+                    </div>
+                    <div class="input-group">
+                        <label>رقم الهاتف (الواتساب) <span class="required">*</span></label>
+                        <input type="tel" id="clientPhone" placeholder="مثال: 009665xxxxxxxx">
+                    </div>
+                    <div class="input-group">
+                        <label>البريد الإلكتروني <span class="required">*</span></label>
+                        <input type="email" id="clientEmail" placeholder="name@example.com">
+                    </div>
+                    <div class="input-group">
+                        <label>رابط حساب لينكد إن (LinkedIn)</label>
+                        <input type="url" id="clientLinkedin" placeholder="https://www.linkedin.com/in/username">
+                    </div>
+                    <div class="input-group">
+                        <label>المدينة والدولة</label>
+                        <input type="text" id="clientCity" placeholder="مثال: الرياض، السعودية">
                     </div>
                 </div>
 
+                <!-- الخطوة 2: الملخص والخبرات -->
                 <div class="form-step">
-                    <div class="form-section">
-                        <h4><i class="fa-solid fa-briefcase"></i> الخطوة 2: المستهدف المهني والخبرات</h4>
-                        <div class="form-group">
-                            <label class="required">المسمى الوظيفي والهدف المهني المستهدف</label>
-                            <textarea id="objective" rows="2" placeholder="المسمى الحالي أو الوظيفة التي تبحث عنها برغبة..."></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>الخبرات العملية السابقة (الشركات، الفترات، المسمى والمسؤوليات)</label>
-                            <textarea id="experience" rows="3" placeholder="مثال: شركة (X) - مهندس تطوير - من 2024 إلى 2026: بناء الواجهات..."></textarea>
-                        </div>
+                    <div class="step-title"><i class="fa-solid fa-briefcase"></i> الملخص المهني والخبرات</div>
+                    <div class="input-group">
+                        <label>الملخص المهني (نبذة قصيرة عن خبراتك ومهاراتك)</label>
+                        <textarea id="clientSummary" rows="3" placeholder="اكتب نبذة مختصرة تلخص مسارك المهني..."></textarea>
+                    </div>
+                    <div class="input-group">
+                        <label>الخبرات العملية (اسم الشركة - المسمى الوظيفي - مدة العمل - المهام والإنجازات)</label>
+                        <textarea id="clientExperience" rows="4" placeholder="يرجى ذكر الخبرات بالتفصيل وبشكل منظم هنا..."></textarea>
                     </div>
                 </div>
 
+                <!-- الخطوة 3: المؤهل والمهارات -->
                 <div class="form-step">
-                    <div class="form-section">
-                        <h4><i class="fa-solid fa-graduation-cap"></i> الخطوة 3: الخلفية التعليمية والقدرات</h4>
-                        <div class="form-group">
-                            <label class="required">المؤهل الدراسي والجامعة وسنة التخرج</label>
-                            <textarea id="education" rows="2" placeholder="الشهادة، التخصص، الكلية، اسم الجامعة، تاريخ التخرج..."></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label class="required">المهارات والقدرات والبرامج التي تتقنها</label>
-                            <textarea id="skills" rows="2" placeholder="مهارات تقنية، برمجية، إدارية، مهارات مرنة وشخصية..."></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label class="required">اللغات المكتسبة ومستويات التحدث</label>
-                            <input type="text" id="languages" placeholder="مثال: العربية (الأم) - الإنجليزية (تحدث وكتابة بطلاقة)">
-                        </div>
+                    <div class="step-title"><i class="fa-solid fa-graduation-cap"></i> المؤهل الدراسي والمهارات</div>
+                    <div class="input-group">
+                        <label>المؤهل الدراسي</label>
+                        <textarea id="clientEducation" rows="3" placeholder="التخصص، اسم الجامعة أو الكلية، سنة التخرج..."></textarea>
+                    </div>
+                    <div class="input-group">
+                        <label>المهارات (Skills)</label>
+                        <textarea id="clientSkills" rows="3" placeholder="اكتب المهارات التقنية والشخصية المفصلة..."></textarea>
                     </div>
                 </div>
 
+                <!-- الخطوة 4: الدورات واللغات والملاحظات -->
                 <div class="form-step">
-                    <div class="form-section">
-                        <h4><i class="fa-solid fa-circle-plus"></i> الخطوة 4: الإضافات الفنية والمشاريع</h4>
-                        <div class="form-group">
-                            <label>الدورات التدريبية الشهادات المهنية (الكورسات)</label>
-                            <textarea id="courses" rows="2" placeholder="أي كورسات، ورش عمل، أو شهادات فنية حصلت عليها..."></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>المشاريع السابقة ونماذج الأعمال الفردية</label>
-                            <textarea id="projects" rows="2" placeholder="أعمال مميزة نفذتها، روابط أعمال، إلخ..."></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>الهوايات والاهتمامات الشخصية</label>
-                            <input type="text" id="hobbies" placeholder="مثل القراءة، البحث التقني، الرياضة...">
-                        </div>
+                    <div class="step-title"><i class="fa-solid fa-certificate"></i> الدورات واللغات والملاحظات</div>
+                    <div class="input-group">
+                        <label>الدورات والشهادات (إن وجدت)</label>
+                        <textarea id="clientCertificates" rows="3" placeholder="اسم الدورة الجهة المانحة (إن وجدت)..."></textarea>
+                    </div>
+                    <div class="input-group">
+                        <label>اللغات</label>
+                        <input type="text" id="clientLanguages" placeholder="مثال: العربية (اللغة الأم)، الإنجليزية (متقدم)">
+                    </div>
+                    <div class="input-group">
+                        <label>ملاحظات إضافية أو طلبات خاصة للمصمم</label>
+                        <textarea id="clientNotes" rows="3" placeholder="إذا كان لديك أي ملاحظات أو شروط خاصة بالطلب اكتبها هنا..."></textarea>
                     </div>
                 </div>
 
+                <!-- أزرار التحكم بالتنقل -->
                 <div class="form-navigation">
-                    <button type="button" class="btn-secondary" id="prevBtn" onclick="changeStep(-1)" style="display:none;">السابق</button>
-                    <button type="button" class="btn" id="nextBtn" onclick="changeStep(1)">التالي</button>
-                    <button type="submit" class="btn" id="submitBtn" style="display:none;"><i class="fa-brands fa-whatsapp"></i> تأكيد وإرسال الطلب</button>
+                    <button type="button" class="nav-btn prev" id="prevBtn" style="display: none;">السابق</button>
+                    <button type="button" class="nav-btn next" id="nextBtn">الخطوة التالية</button>
                 </div>
             </form>
         </div>
     </div>
-    <footer style="text-align: center; font-family: 'Courier New', Courier, monospace; border-style: double; padding: 4px; border-radius: 20px; width: 100px; margin:auto;">sera cv </footer>
-    <br>
-    <br>
-    <script src="script.js"></script>
 
+    <!-- الفوتر الرسمي وروابط التواصل -->
+    <footer>
+        <div class="social-headline">تابع منصاتنا الرسمية</div>
+        <div class="social-links">
+            <a href="https://www.facebook.com/share/1PJWz46fZy/" target="_blank" class="social-icon"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/sera_cv/" target="_blank" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.tiktok.com/@sera.cv?_r=1&_t=ZS-97HYPpsDvol" target="_blank" class="social-icon"><i class="fa-brands fa-tiktok"></i></a>
+            <a href="https://wa.me/966579801275" target="_blank" class="social-icon"><i class="fa-brands fa-whatsapp"></i></a>
+        </div>
+        <div class="footer-credits">
+sera cv 2026
+        </div>
+    </footer>
+
+    <script>
+        let currentStep = 0;
+        const formSteps = document.querySelectorAll('.form-step');
+        const indicators = document.querySelectorAll('.step-indicator');
+        const progressLine = document.getElementById('progressLine');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const countrySelect = document.getElementById('countrySelect');
+        const orderModal = document.getElementById('orderModal');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+
+        // قائمة أسعار المنتجات لحسابها ديناميكياً وإرسالها في الفاتورة
+        const priceList = {
+            'EG': { 'سيرة ذاتية احترافية': '150 جنيه مصري', 'خطاب تغطية (Cover Letter)': '100 جنيه مصري', 'موقع شخصي (برتوفليو)': '500 جنيه مصري' },
+            'SA': { 'سيرة ذاتية احترافية': '40 ريال سعودي', 'خطاب تغطية (Cover Letter)': '25 ريال سعودي', 'موقع شخصي (برتوفليو)': '150 ريال سعودي' }
+        };
+
+        function updatePrices() {
+            const country = countrySelect.value;
+            const cvPrice = document.getElementById('price-cv');
+            const clPrice = document.getElementById('price-cl');
+            const portfolioPrice = document.getElementById('price-portfolio');
+
+            if(country === 'EG') {
+                cvPrice.innerHTML = '300 <span>جنيه مصري</span>';
+                clPrice.innerHTML = '140 <span>جنيه مصري</span>';
+                portfolioPrice.innerHTML = '600 <span>جنيه مصري</span>';
+            } else if(country === 'SA') {
+                cvPrice.innerHTML = '50 <span>ريال سعودي</span>';
+                clPrice.innerHTML = '30 <span>ريال سعودي</span>';
+                portfolioPrice.innerHTML = '120 <span>ريال سعودي</span>';
+            }
+        }
+        
+        // ربط الحدث عند تغيير الدولة لتحديث الأسعار فوراً
+        countrySelect.addEventListener('change', updatePrices);
+
+        document.querySelectorAll('.order-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const productName = this.getAttribute('data-product');
+                document.getElementById('selectedItemName').value = productName;
+                document.getElementById('modalProductTitle').innerText = `طلب: ${productName}`;
+                orderModal.classList.add('active');
+                currentStep = 0;
+                showStep(currentStep);
+            });
+        });
+
+        closeModalBtn.addEventListener('click', function() {
+            orderModal.classList.remove('active');
+        });
+
+        function showStep(stepIndex) {
+            formSteps.forEach((step, idx) => {
+                step.classList.toggle('active', idx === stepIndex);
+            });
+
+            indicators.forEach((indicator, idx) => {
+                if (idx < stepIndex) {
+                    indicator.className = 'step-indicator completed';
+                    indicator.innerHTML = '<i class="fa-solid fa-check"></i>';
+                } else if (idx === stepIndex) {
+                    indicator.className = 'step-indicator active';
+                    indicator.innerText = idx + 1;
+                } else {
+                    indicator.className = 'step-indicator';
+                    indicator.innerText = idx + 1;
+                }
+            });
+
+            const progressPercent = (stepIndex / (formSteps.length - 1)) * 100;
+            progressLine.style.width = `${progressPercent}%`;
+
+            prevBtn.style.display = stepIndex === 0 ? 'none' : 'block';
+
+            if (stepIndex === formSteps.length - 1) {
+                nextBtn.innerText = 'إرسال الطلب عبر الواتساب';
+                nextBtn.className = 'nav-btn next submit';
+            } else {
+                nextBtn.innerText = 'الخطوة التالية';
+                nextBtn.className = 'nav-btn next';
+            }
+        }
+
+        function navigateStep(direction) {
+            if (direction === 1) {
+                const name = document.getElementById('clientName').value.trim();
+                const phone = document.getElementById('clientPhone').value.trim();
+                const email = document.getElementById('clientEmail').value.trim();
+
+                if (!name || !phone || !email) {
+                    alert("⚠️ خطأ: يرجى إدخال الحقول الأساسية المطلوبة أولاً (الاسم الكامل، رقم الهاتف، والبريد الإلكتروني).");
+                    currentStep = 0;
+                    showStep(currentStep);
+                    return;
+                }
+            }
+
+            currentStep += direction;
+
+            if (currentStep >= formSteps.length) {
+                sendWhatsAppPayload();
+                currentStep = formSteps.length - 1;
+                return;
+            }
+            showStep(currentStep);
+        }
+
+        nextBtn.addEventListener('click', () => navigateStep(1));
+        prevBtn.addEventListener('click', () => navigateStep(-1));
+
+        function sendWhatsAppPayload() {
+            const product = document.getElementById('selectedItemName').value;
+            const name = document.getElementById('clientName').value;
+            const phone = document.getElementById('clientPhone').value;
+            const email = document.getElementById('clientEmail').value;
+            const linkedin = document.getElementById('clientLinkedin').value.trim() || 'لم يتم الإدخال';
+            const city = document.getElementById('clientCity').value.trim() || 'لم يتم الإدخال';
+            const summary = document.getElementById('clientSummary').value.trim() || 'لم يتم الإدخال';
+            const experience = document.getElementById('clientExperience').value.trim() || 'لم يتم الإدخال';
+            const education = document.getElementById('clientEducation').value.trim() || 'لم يتم الإدخال';
+            const skills = document.getElementById('clientSkills').value.trim() || 'لم يتم الإدخال';
+            const certs = document.getElementById('clientCertificates').value.trim() || 'لم يتم الإدخال';
+            const languages = document.getElementById('clientLanguages').value.trim() || 'لم يتم الإدخال';
+            const notes = document.getElementById('clientNotes').value.trim() || 'لا توجد ملاحظات إضافية';
+            
+            const currentCountry = countrySelect.value;
+            const selectedCountryName = currentCountry === 'EG' ? 'جمهورية مصر العربية' : 'المملكة العربية السعودية';
+            const finalPrice = priceList[currentCountry][product] || 'غير محدد';
+
+            const message = `💼 [نظام الطلبات الإلكتروني الذكي - SERA CV]
+----------------------------------------
+📌 تفاصيل الخدمة والفاتورة:
+• نوع الخدمة: ${product}
+• الدولة المحددة: ${selectedCountryName}
+• تكلفة الخدمة الإجمالية: ${finalPrice}
+
+----------------------------------------
+👤 أولاً: البيانات الشخصية والاتصال:
+• الاسم الكامل: ${name}
+• رقم الهاتف: ${phone}
+• البريد الإلكتروني: ${email}
+• رابط لينكد إن: ${linkedin}
+• المدينة والدولة: ${city}
+
+----------------------------------------
+📝 ثانياً: الملخص والمسار المهني:
+${summary}
+
+----------------------------------------
+🛠️ ثالثاً: الخبرات والوظائف السابقة:
+${experience}
+
+----------------------------------------
+🎓 رابعاً: المؤهلات الأكاديمية والتعليم:
+${education}
+
+----------------------------------------
+💎 خامساً: المهارات المكتسبة:
+${skills}
+
+----------------------------------------
+📜 سادساً: الدورات والشهادات التدريبية:
+${certs}
+
+----------------------------------------
+🌐 سابعاً: اللغات:
+${languages}
+
+----------------------------------------
+💡 ثامناً: ملاحظات وتوصيات العميل الخاصة:
+"${notes}"
+----------------------------------------
+🚀 [تم توليد هذا النموذج تلقائياً ومراجعته بواسطة SERA CV لعام 2026]`;
+
+            const encodedText = encodeURIComponent(message);
+            const targetWhatsApp = "966579801275";
+            
+            window.open(`https://wa.me/${targetWhatsApp}?text=${encodedText}`, '_blank');
+            orderModal.classList.remove('active');
+        }
+
+        // تشغيل الدالة لأول مرة عند تحميل الصفحة لتحديد أسعار الدولة الافتراضية
+        updatePrices();
+    </script>
 </body>
 </html>
